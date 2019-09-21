@@ -19,10 +19,10 @@ export default ({ token }) => (
           <Menu.Item as="a" header>
             <Image
               size="mini"
-              src="/static/moltin-light-hex.svg"
+              src="/static/logo.png"
               style={{ marginRight: '1.5em' }}
             />
-            NextJS Store
+            Pro Store
           </Menu.Item>
         </Link>
 

@@ -1,6 +1,5 @@
 {
-  "alias": "moltin-nextjs-demo-store",
-  "dotenv": true,
+  "alias": "intelliship-pro-store",
   "env": {
     "NODE_ENV": "production"
   }

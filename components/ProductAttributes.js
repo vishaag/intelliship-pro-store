@@ -14,7 +14,7 @@ export default ({
 
     <Divider />
 
-    <Table celled>
+    {/* <Table celled>
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell colSpan="2">Attributes</Table.HeaderCell>
@@ -43,6 +43,6 @@ export default ({
           <Table.Cell>{bulb}</Table.Cell>
         </Table.Row>
       </Table.Body>
-    </Table>
+    </Table> */}
   </React.Fragment>
 )
