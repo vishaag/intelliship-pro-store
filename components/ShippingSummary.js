@@ -1,4 +1,4 @@
-import { Button, Segment, Divider, Dropdown, Table, Form, Radio } from 'semantic-ui-react'
+import { Button, Segment, Divider, Dropdown, Table, Form, Radio, Image, Label } from 'semantic-ui-react'
 
 
 export default ({
@@ -12,11 +12,10 @@ export default ({
   shippingButtonHandle,
   fromShipping,
   countrySelected,
+  packingPictures,
   display_price: {
     with_tax: { amount, currency, formatted }
   },
-
-  
 }) => (
   <React.Fragment>
     <Divider />
@@ -51,8 +50,10 @@ export default ({
         <br></br>
         <br></br>
 
-      {countrySelected &&
-      (<Table celled structured>
+      {countrySelected && 
+      (
+        <div>
+      <Table celled structured>
       <Table.Header>
         <Table.Row>
         <Table.HeaderCell>Delivery Name</Table.HeaderCell>
@@ -82,7 +83,26 @@ export default ({
 
         </Table.Row>)}
       </Table.Body>
-      </Table>)}
+      </Table>
+      <Label  color='yellow' ribbon>
+          Note
+      </Label>
+      Your package will be packed in the following manner to minimize shipping cost! 
+      <br></br>
+      <br></br>
+      <div>
+      {packingPictures.map(item =>
+            <div>
+              <Image src={item.img} size='small' verticalAlign='middle' /> 
+                <Label pointing='left'>{item.dimensions}</Label>
+                <Label size = 'medium' color='black'>{item.name}</Label>
+              <Divider />     
+            </div>     
+      )}
+      </div>
+      </div>
+      )
+    }
     
 
     </Segment>

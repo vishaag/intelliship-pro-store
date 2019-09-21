@@ -3,6 +3,7 @@ import { Button, Segment, Divider } from 'semantic-ui-react'
 
 export default ({
   shippingCharges,
+  shippingPricesLoaded,
   handleCheckout,
   display_price: {
     with_tax: { amount, currency, formatted }
@@ -24,7 +25,7 @@ export default ({
         reconfigureOnUpdate={false}
         triggerEvent="onClick"
       >
-        <Button color="black" floated="right">
+        <Button color="black" floated="right" disabled={!shippingPricesLoaded}>
           Check out
         </Button>
       </StripeCheckout>

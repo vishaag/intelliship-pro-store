@@ -24,7 +24,8 @@ export default class Cart extends React.Component {
     deliveryDetails: [],
     shippingButtonActive : '',
     shippingCharges: 0.00,
-    countrySelected : false
+    countrySelected : false,
+    packingPictures : []
   }
 
 
@@ -91,55 +92,53 @@ export default class Cart extends React.Component {
     const productSpecs = {
       // in grams
         "001" : {
+          "name": "Desi Avramovitz",
           "weight" : 500,
           "w" : 50,
           "h" : 50,
           "d" : 40
         },
         "002" : {
+          "name" : "Micheline Charlson",
           "weight" : 400,
           "w" : 40,
           "h" : 40,
           "d" : 40
         },
        "003" : {
+         "name" : "Chair",
          "weight" : 4000,
          "w" : 82,
          "h" : 101,
          "d" : 96
        },
        "005" : {
+         "name" : "Rod",
          "weight" : 500,
          "w" : 10,
          "h" : 10,
          "d" : 250
        }
       }
+
     //construct GET request URL
     var url = 'https://intelliship-server.glitch.me/getOptimizedPacking?'
 
-    
     var urlParams = ''
     this.state.items.forEach((element) => {
       urlParams += element.sku + '=' + element.quantity + '&'
     })
     url = url + urlParams
-    console.log(url)
 
     //Optimizer API
     const optimizerResponse = await fetch(url);
     var optimizedPacking = await optimizerResponse.json();
 
-    // console.log(optimizedPacking)
-    // this.setState({
-    //   optimizedPacking: optimizedPacking.response.bins_packed[0].bin_data.id
-    // })
+    console.log(optimizedPacking)
 
     // Weight Calculator
     var grossWeight = 0
     var volumetricWeight = 0;
-    console.log(this.state.items[0].id)
-    console.log(productSpecs[this.state.items[0].sku].weight)
 
   
     // Calculate Product Weight
@@ -154,11 +153,6 @@ export default class Cart extends React.Component {
     var finalWeight = (volumetricWeight > grossWeight) ? volumetricWeight : grossWeight
     finalWeight = finalWeight/1000 //convert to Kilograms
 
-    console.log(this.state.selectedCountry)
-
-    console.log(packingData)
-    console.log(grossWeight)
-    console.log(volumetricWeight)
 
     // make call to LEO's api passing
 
@@ -170,6 +164,25 @@ export default class Cart extends React.Component {
 
     // console.log(rulesEngineResponse)
 
+    this.state.packingPictures =  [
+      { 
+        img: optimizedPacking.response.bins_packed[0].image_complete,
+        name: 'Final Packing',
+        dimensions : optimizedPacking.response.bins_packed[0].bin_data.d + 'x' +
+                     optimizedPacking.response.bins_packed[0].bin_data.h + 'x' +
+                     optimizedPacking.response.bins_packed[0].bin_data.w 
+
+      },
+    ]
+
+    optimizedPacking.response.bins_packed[0].items.forEach((item) => {
+      this.state.packingPictures.push({
+        name: productSpecs[item.id].name,
+        img: item.image_separated,
+        dimensions: item.d + 'x' + item.w + 'x' + item.h 
+
+      })
+    })
 
 
     this.setState({
@@ -198,6 +211,7 @@ export default class Cart extends React.Component {
     const { data, meta } = await removeFromCart(itemId, cartId)
 
     this.setState({
+      countrySelected: false,
       items: data,
       meta
     })
@@ -206,10 +220,10 @@ export default class Cart extends React.Component {
   handleChange = (e, { value }) => {
     this.setState({ 
       selectedCountry: value,
-      getPricesButtonDisabled : false
+      getPricesButtonDisabled : false,
+      countrySelected: false
     })
-
-    console.log(value)
+    
   }
 
   _shippingButtonHandle = (event, element) => {
@@ -410,10 +424,15 @@ export default class Cart extends React.Component {
           shippingButtonHandle = {this._shippingButtonHandle}
           fromShipping = {fromShipping}
           countrySelected = {this.state.countrySelected}
+          packingPictures = {this.state.packingPictures}
           />
         )}
         {!loading && !rest.completed && (
-          <CartSummary {...meta} handleCheckout={this._handleCheckout} shippingCharges = {this.state.shippingCharges}/>
+          <CartSummary {...meta} 
+          handleCheckout={this._handleCheckout} 
+          shippingCharges = {this.state.shippingCharges}
+          shippingPricesLoaded = {this.state.shippingButtonActive}
+          />
         )}
 
       </Layout>
