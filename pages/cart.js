@@ -21,6 +21,7 @@ export default class Cart extends React.Component {
     optimizedPacking: '',
     selectedCountry : '',
     getPricesButtonDisabled : true,
+    deliveryDetails: [],
     countryOptions : [
       { key: 'af', value: 'af', flag: 'af', text: 'Afghanistan' },
       { key: 'ax', value: 'ax', flag: 'ax', text: 'Aland Islands' },
@@ -111,13 +112,13 @@ export default class Cart extends React.Component {
 
     var productSpecs = {
       // in grams
-      '3bc57a05-e56b-42cc-b27b-f00068ed1748' : {
+      '001' : {
         'weight': 500,
         'l' : 50,
         'b' : 50,
         'h' : 40
       },
-      '666241c8-c9eb-41dc-828e-bc20e111a348' : {
+      '002' : {
         'weight': 400,
         'l' : 40,
         'b' : 40,
@@ -133,7 +134,7 @@ export default class Cart extends React.Component {
     
     var urlParams = ''
     this.state.items.forEach((element) => {
-      urlParams += element.id + '=' + element.quantity + '&'
+      urlParams += element.sku + '=' + element.quantity + '&'
     })
     url = url + urlParams
     console.log(url)
@@ -150,17 +151,14 @@ export default class Cart extends React.Component {
     // Weight Calculator
     var grossWeight = 0
     var volumetricWeight = 0;
-  
-  
+    console.log(this.state.items[0].id)
+    console.log(productSpecs[this.state.items[0].sku].weight)
 
-
+  
     // Calculate Product Weight
     this.state.items.forEach((element) => {
-      // console.log(element)
-      console.log(productSpecs[element.id])
-      grossWeight += productSpecs[element.id].weight
+      grossWeight += productSpecs[element.sku].weight * element.quantity
     })
-
 
     var packingData = optimizedPacking.response.bins_packed[0].bin_data
 
@@ -172,11 +170,18 @@ export default class Cart extends React.Component {
 
     // make call to LEO's api passing
 
-    var prices = [{
-      deliveryName : 'UPS',
-      deliveryDate : '25-Sep',
-      price : '25$'
-    }]
+    this.setState({
+      deliveryDetails : 
+      [
+        {
+          deliveryName : 'UPS',
+          deliveryDate : '25-Sep',
+          price : '25$'
+        },
+      ]
+    })
+
+
   }
 
 
@@ -213,7 +218,8 @@ export default class Cart extends React.Component {
           countries = {this.state.countryOptions}
           selectedCountry = {this.state.selectedCountry}
           handleChange = {this.handleChange}
-          getPricesButtonDisabled = {this.state.getPricesButtonDisabled}/>
+          getPricesButtonDisabled = {this.state.getPricesButtonDisabled}
+          deliveryDetails = {this.state.deliveryDetails}/>
         )}
         {!loading && !rest.completed && (
           <CartSummary {...meta} handleCheckout={this._handleCheckout} />

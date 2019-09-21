@@ -2,6 +2,7 @@ import { Button, Segment, Divider, Dropdown, Icon, Label, Menu, Table } from 'se
 
 
 export default ({
+  deliveryDetails,
   getPricesButtonDisabled,
   handleChange,
   optimizedPacking,
@@ -30,36 +31,30 @@ export default ({
             onChange={handleChange}
             defaultValue= 'af'
           />
-        <div>{optimizedPacking}</div>
 
-
-  <Table celled>
-    <Table.Header>
-      <Table.Row>
+      <Table celled>
+      <Table.Header>
+        <Table.Row>
         <Table.HeaderCell>Delivery Name</Table.HeaderCell>
-        <Table.HeaderCell>Delivery Date</Table.HeaderCell>
-        <Table.HeaderCell>Price</Table.HeaderCell>
-      </Table.Row>
-    </Table.Header>
+          <Table.HeaderCell>Delivery Date</Table.HeaderCell>
+          <Table.HeaderCell>Price</Table.HeaderCell>
+          <Table.HeaderCell>Select</Table.HeaderCell>
+        </Table.Row>
+      </Table.Header>
 
-    <Table.Body>
-      <Table.Row>
-        <Table.Cell>Cell</Table.Cell>
-        <Table.Cell>Cell</Table.Cell>
-        <Table.Cell>Cell</Table.Cell>
-      </Table.Row>
-      <Table.Row>
-        <Table.Cell>Cell</Table.Cell>
-        <Table.Cell>Cell</Table.Cell>
-        <Table.Cell>Cell</Table.Cell>
-      </Table.Row>
-      <Table.Row>
-        <Table.Cell>Cell</Table.Cell>
-        <Table.Cell>Cell</Table.Cell>
-        <Table.Cell>Cell</Table.Cell>
-      </Table.Row>
-    </Table.Body>
-  </Table>
+      <Table.Body>
+        {deliveryDetails.map(deliveryDetail => 
+        <Table.Row>
+          <Table.Cell>{deliveryDetail.deliveryName}</Table.Cell>
+          <Table.Cell>{deliveryDetail.deliveryDate}</Table.Cell>
+          <Table.Cell>{deliveryDetail.price}</Table.Cell>
+          <Table.Cell><input type="radio" name={deliveryDetail.deliveryName} value={deliveryDetail.deliveryName}/></Table.Cell>
+          
+
+        </Table.Row>)}
+      </Table.Body>
+      </Table>
+    
 
     </Segment>
       
