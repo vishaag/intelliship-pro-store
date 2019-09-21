@@ -25,7 +25,8 @@ export default class Cart extends React.Component {
     shippingButtonActive : '',
     shippingCharges: 0.00,
     countrySelected : false,
-    packingPictures : []
+    packingPictures : [],
+    addressEmpty : true
   }
 
 
@@ -230,7 +231,8 @@ export default class Cart extends React.Component {
     this.setState(
       { 
         shippingButtonActive: element.value,
-        shippingCharges: element.price
+        shippingCharges: element.price,
+        enableCheckout : true
       }
       )
   }
@@ -427,11 +429,13 @@ export default class Cart extends React.Component {
           packingPictures = {this.state.packingPictures}
           />
         )}
+        
         {!loading && !rest.completed && (
           <CartSummary {...meta} 
           handleCheckout={this._handleCheckout} 
           shippingCharges = {this.state.shippingCharges}
           shippingPricesLoaded = {this.state.shippingButtonActive}
+
           />
         )}
 

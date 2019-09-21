@@ -1,4 +1,4 @@
-import { Button, Segment, Divider, Dropdown, Table, Form, Radio, Image, Label } from 'semantic-ui-react'
+import { Button, Segment, Divider, Dropdown, Table, Form, Radio, Image, Label, Input } from 'semantic-ui-react'
 
 
 export default ({
@@ -10,7 +10,6 @@ export default ({
   handleShipping,
   shippingButtonActive,
   shippingButtonHandle,
-  fromShipping,
   countrySelected,
   packingPictures,
   display_price: {
@@ -21,20 +20,15 @@ export default ({
     <Divider />
     <Segment clearing size="large">
       <strong>Shipping Details</strong>
-
-        <div></div>
         <br></br>
-        Shipping From
-        <Dropdown
-            fluid
-            search
-            selection
-            options={fromShipping}
-            defaultValue='Singapore'
-          />
         <br></br>
-        Shipping To 
+        <Input 
+        fluid 
+        placeholder='Address'
+        />
+        <br></br>
         <Dropdown
+            placeholder = 'Country'
             fluid
             search
             selection
@@ -43,6 +37,7 @@ export default ({
             onChange={handleChange}
           />
           <br></br>
+          
         <Button
         color="black" floated="right" onClick={() => handleShipping()} disabled={getPricesButtonDisabled}>
           Get Shipping Prices 
@@ -84,14 +79,19 @@ export default ({
         </Table.Row>)}
       </Table.Body>
       </Table>
-      <Label  color='yellow' ribbon>
-          Note
-      </Label>
-      Your package will be packed in the following manner to minimize shipping cost! 
-      <br></br>
+
+      {packingPictures && (
+        <div>
+          <Label  color='black' ribbon>
+              Note
+          </Label>
+        <span>Your package will be packed in the following manner to minimize shipping cost! </span>
+        </div>
+      )}
+      
       <br></br>
       <div>
-      {packingPictures.map(item =>
+      {packingPictures && packingPictures.map(item =>
             <div>
               <Image src={item.img} size='small' verticalAlign='middle' /> 
                 <Label pointing='left'>{item.dimensions}</Label>
