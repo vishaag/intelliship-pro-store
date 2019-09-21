@@ -129,7 +129,7 @@ export default class Cart extends React.Component {
     console.log(this.state.items)
 
     //construct GET request URL
-    var url = 'http://intelliship-server.glitch.me/getOptimizedPacking?'
+    var url = 'https://intelliship-server.glitch.me/getOptimizedPacking?'
 
     
     var urlParams = ''
