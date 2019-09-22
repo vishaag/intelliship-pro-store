@@ -1,4 +1,4 @@
-import { Button, Segment, Divider, Dropdown, Table, Form, Radio, Image, Label, Input } from 'semantic-ui-react'
+import { Button, Segment, Divider, Dropdown, Table, Form, Radio, Image, Label, Input, Header } from 'semantic-ui-react'
 
 
 export default ({
@@ -48,7 +48,7 @@ export default ({
       {countrySelected && 
       (
         <div>
-      <Table celled structured>
+      <Table basic='very' celled >
       <Table.Header>
         <Table.Row>
         <Table.HeaderCell>Delivery Name</Table.HeaderCell>
@@ -61,7 +61,14 @@ export default ({
       <Table.Body>
         {deliveryDetails.map(deliveryDetail => 
         <Table.Row>
-          <Table.Cell>{deliveryDetail.deliveryName}</Table.Cell>
+          <Table.Cell>
+            <Header as='h4' image>
+              <Image src={'/static/shippingLogo/'+deliveryDetail.deliveryName+'.png'} rounded size='mini' />
+              <Header.Content>
+                {deliveryDetail.deliveryName}
+              </Header.Content>
+            </Header>
+          </Table.Cell>
           <Table.Cell>{deliveryDetail.time}</Table.Cell>
           <Table.Cell>${deliveryDetail.price}</Table.Cell>
           <Table.Cell>          
