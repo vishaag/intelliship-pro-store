@@ -52,7 +52,7 @@ export default ({
       <Table.Header>
         <Table.Row>
         <Table.HeaderCell>Delivery Name</Table.HeaderCell>
-          <Table.HeaderCell>Delivery Date</Table.HeaderCell>
+          <Table.HeaderCell>Delivery Time (Days)</Table.HeaderCell>
           <Table.HeaderCell>Shipping Cost</Table.HeaderCell>
           <Table.HeaderCell>Select</Table.HeaderCell>
         </Table.Row>
@@ -62,7 +62,7 @@ export default ({
         {deliveryDetails.map(deliveryDetail => 
         <Table.Row>
           <Table.Cell>{deliveryDetail.deliveryName}</Table.Cell>
-          <Table.Cell>{deliveryDetail.deliveryDate}</Table.Cell>
+          <Table.Cell>{deliveryDetail.time}</Table.Cell>
           <Table.Cell>${deliveryDetail.price}</Table.Cell>
           <Table.Cell>          
             <Form.Field>

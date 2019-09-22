@@ -2,8 +2,6 @@ import Layout from '../components/Layout'
 import CartItemList from '../components/CartItemList'
 import CartSummary from '../components/CartSummary'
 import ShippingSummary from '../components/ShippingSummary'
-import { Table } from 'semantic-ui-react'
-
 
 
 import {
@@ -93,14 +91,14 @@ export default class Cart extends React.Component {
     const productSpecs = {
       // in grams
         "001" : {
-          "name": "Desi Avramovitz",
+          "name": "Brown Watch",
           "weight" : 500,
           "w" : 50,
           "h" : 50,
           "d" : 40
         },
         "002" : {
-          "name" : "Micheline Charlson",
+          "name" : "Black Watch",
           "weight" : 400,
           "w" : 40,
           "h" : 40,
@@ -108,17 +106,24 @@ export default class Cart extends React.Component {
         },
        "003" : {
          "name" : "Chair",
-         "weight" : 4000,
+         "weight" : 2000,
          "w" : 82,
          "h" : 101,
          "d" : 96
        },
+       "004" : {
+        "name" : "Toy Car",
+        "weight" : 200,
+        "w" : 5,
+        "h" : 15,
+        "d" : 15
+      },
        "005" : {
-         "name" : "Rod",
-         "weight" : 500,
+         "name" : "Cotton Mat",
+         "weight" : 1000,
          "w" : 10,
-         "h" : 10,
-         "d" : 250
+         "h" : 30,
+         "d" : 30
        }
       }
 
@@ -155,15 +160,15 @@ export default class Cart extends React.Component {
     finalWeight = finalWeight/1000 //convert to Kilograms
 
 
-    // make call to LEO's api passing
+    // make call to Rules Engine API
 
-    // var rulesEngineURL = 'http://172.17.180.138:8080/delivery/getMoney?'
-    // rulesEngineURL += 'area='+this.state.selectedCountry+'&weight='+finalWeight
+    var rulesEngineURL = 'http://172.17.180.138:8080/delivery/getMoney?'
+    rulesEngineURL += 'area='+this.state.selectedCountry+'&weight='+finalWeight
 
-    // var rulesEngineResponse = await fetch(rulesEngineURL);
-    // var rulesEngineResponse = await rulesEngineResponse.json();
+    var rulesEngineResponse = await fetch(rulesEngineURL);
+    var rulesEngineResponse = await rulesEngineResponse.json();
 
-    // console.log(rulesEngineResponse)
+    console.log(rulesEngineResponse)
 
     this.state.packingPictures =  [
       { 
@@ -187,19 +192,7 @@ export default class Cart extends React.Component {
 
 
     this.setState({
-      deliveryDetails : 
-      [
-        {
-          deliveryName : 'UPS',
-          deliveryDate : '25-Sep',
-          price : 25.00
-        },
-        {
-          deliveryName : 'GPS',
-          deliveryDate : '25-Sep',
-          price : 35.00
-        },
-      ],
+      deliveryDetails : rulesEngineResponse,
       countrySelected: true
     })
 
