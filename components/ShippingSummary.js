@@ -86,7 +86,6 @@ export default ({
         </Table.Row>)}
       </Table.Body>
       </Table>
-
       {packingPictures && (
         <div>
           <Label  color='black' ribbon>

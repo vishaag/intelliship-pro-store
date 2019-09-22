@@ -162,7 +162,7 @@ export default class Cart extends React.Component {
 
     // make call to Rules Engine API
 
-    var rulesEngineURL = 'http://172.17.180.138:8080/delivery/getMoney?'
+    var rulesEngineURL = 'http://localhost:8080/delivery/getMoney?'
     rulesEngineURL += 'area='+this.state.selectedCountry+'&weight='+finalWeight
 
     var rulesEngineResponse = await fetch(rulesEngineURL);

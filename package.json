@@ -9,7 +9,6 @@
     "heroku-postbuild": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  
   "dependencies": {
     "@moltin/sdk": "^3.19.0",
     "babel-plugin-inline-dotenv": "^1.1.2",
