@@ -162,11 +162,34 @@ export default class Cart extends React.Component {
 
     // make call to Rules Engine API
 
-    var rulesEngineURL = 'http://localhost:8080/delivery/getMoney?'
-    rulesEngineURL += 'area='+this.state.selectedCountry+'&weight='+finalWeight
+    // var rulesEngineURL = 'http://localhost:8080/delivery/getMoney?'
+    // rulesEngineURL += 'area='+this.state.selectedCountry+'&weight='+finalWeight
 
-    var rulesEngineResponse = await fetch(rulesEngineURL);
-    var rulesEngineResponse = await rulesEngineResponse.json();
+    // var rulesEngineResponse = await fetch(rulesEngineURL);
+    // var rulesEngineResponse = await rulesEngineResponse.json();
+
+    var rulesEngineResponse = [
+      {
+        deliveryName : 'UPS',
+        price: '25',
+        time: '2 to 3'
+      },
+      {
+        deliveryName : 'SF',
+        price: '45',
+        time: '2'
+      },
+      {
+        deliveryName : 'DHL',
+        price: '60',
+        time: '1'
+      },
+      {
+        deliveryName : 'FedEx',
+        price: '15',
+        time: '6 to 7'
+      }
+    ]
 
     console.log(rulesEngineResponse)
 
